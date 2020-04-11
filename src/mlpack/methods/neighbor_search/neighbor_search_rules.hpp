@@ -31,7 +31,7 @@ namespace neighbor {
  * @tparam MetricType The metric to use for computation.
  * @tparam TreeType The tree type to use; must adhere to the TreeType API.
  */
-template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT = double>
 class NeighborSearchRules
 {
  public:

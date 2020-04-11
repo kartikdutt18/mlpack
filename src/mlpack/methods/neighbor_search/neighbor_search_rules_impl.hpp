@@ -150,24 +150,24 @@ inline double NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::Score(
       SortPolicy::ConvertToScore(distance) : DBL_MAX;
 }
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
-inline size_t NeighborSearchRules<SortPolicy, MetricType, TreeType>::
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+inline size_t NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::
 GetBestChild(const size_t queryIndex, TreeType& referenceNode)
 {
   ++scores;
   return SortPolicy::GetBestChild(querySet.col(queryIndex), referenceNode);
 }
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
-inline size_t NeighborSearchRules<SortPolicy, MetricType, TreeType>::
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+inline size_t NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::
 GetBestChild(const TreeType& queryNode, TreeType& referenceNode)
 {
   ++scores;
   return SortPolicy::GetBestChild(queryNode, referenceNode);
 }
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
-inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::Rescore(
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+inline double NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::Rescore(
     const size_t queryIndex,
     TreeType& /* referenceNode */,
     const double oldScore) const
@@ -185,8 +185,8 @@ inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::Rescore(
   return (SortPolicy::IsBetter(distance, bestDistance)) ? oldScore : DBL_MAX;
 }
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
-inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::Score(
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+inline double NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::Score(
     TreeType& queryNode,
     TreeType& referenceNode)
 {
@@ -346,8 +346,8 @@ inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::Score(
   }
 }
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
-inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::Rescore(
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+inline double NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::Rescore(
     TreeType& queryNode,
     TreeType& /* referenceNode */,
     const double oldScore) const
@@ -365,8 +365,8 @@ inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::Rescore(
 
 // Calculate the bound for a given query node in its current state and update
 // it.
-template<typename SortPolicy, typename MetricType, typename TreeType>
-inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+inline double NeighborSearchRules<SortPolicy, MetricType, TreeType, typename eT>::
     CalculateBound(TreeType& queryNode) const
 {
   // This is an adapted form of the B(N_q) function in the paper
@@ -492,8 +492,8 @@ inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::
  * @param neighbor Index of reference point which is being inserted.
  * @param distance Distance from query point to reference point.
  */
-template<typename SortPolicy, typename MetricType, typename TreeType>
-inline void NeighborSearchRules<SortPolicy, MetricType, TreeType>::
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+inline void NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::
 InsertNeighbor(
     const size_t queryIndex,
     const size_t neighbor,
