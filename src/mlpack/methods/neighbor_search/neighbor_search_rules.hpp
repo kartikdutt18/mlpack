@@ -31,7 +31,7 @@ namespace neighbor {
  * @tparam MetricType The metric to use for computation.
  * @tparam TreeType The tree type to use; must adhere to the TreeType API.
  */
-template<typename SortPolicy, typename MetricType, typename TreeType>
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
 class NeighborSearchRules
 {
  public:
@@ -47,8 +47,8 @@ class NeighborSearchRules
    * @param sameSet If true, the query and reference set are taken to be the
    *      same, and a query point will not return itself in the results.
    */
-  NeighborSearchRules(const typename TreeType::Mat& referenceSet,
-                      const typename TreeType::Mat& querySet,
+  NeighborSearchRules(const typename TreeType::template Mat<eT>& referenceSet,
+                      const typename TreeType::template Mat<eT>& querySet,
                       const size_t k,
                       MetricType& metric,
                       const double epsilon = 0,

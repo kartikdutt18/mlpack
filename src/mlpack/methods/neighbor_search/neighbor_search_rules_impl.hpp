@@ -19,10 +19,10 @@
 namespace mlpack {
 namespace neighbor {
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
-NeighborSearchRules<SortPolicy, MetricType, TreeType>::NeighborSearchRules(
-    const typename TreeType::Mat& referenceSet,
-    const typename TreeType::Mat& querySet,
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::NeighborSearchRules(
+    const typename TreeType::template Mat<eT>& referenceSet,
+    const typename TreeType::template Mat<eT>& querySet,
     const size_t k,
     MetricType& metric,
     const double epsilon,
@@ -59,8 +59,8 @@ NeighborSearchRules<SortPolicy, MetricType, TreeType>::NeighborSearchRules(
     candidates.push_back(pqueue);
 }
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
-void NeighborSearchRules<SortPolicy, MetricType, TreeType>::GetResults(
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+void NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::GetResults(
     arma::Mat<size_t>& neighbors,
     arma::mat& distances)
 {
@@ -79,9 +79,9 @@ void NeighborSearchRules<SortPolicy, MetricType, TreeType>::GetResults(
   }
 };
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
 inline force_inline // Absolutely MUST be inline so optimizations can happen.
-double NeighborSearchRules<SortPolicy, MetricType, TreeType>::
+double NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::
 BaseCase(const size_t queryIndex, const size_t referenceIndex)
 {
   // If the datasets are the same, then this search is only using one dataset
@@ -107,8 +107,8 @@ BaseCase(const size_t queryIndex, const size_t referenceIndex)
   return distance;
 }
 
-template<typename SortPolicy, typename MetricType, typename TreeType>
-inline double NeighborSearchRules<SortPolicy, MetricType, TreeType>::Score(
+template<typename SortPolicy, typename MetricType, typename TreeType, typename eT>
+inline double NeighborSearchRules<SortPolicy, MetricType, TreeType, eT>::Score(
     const size_t queryIndex,
     TreeType& referenceNode)
 {
