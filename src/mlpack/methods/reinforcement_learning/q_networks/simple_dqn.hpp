@@ -41,8 +41,8 @@ class SimpleDQN
    * Construct an instance of SimpleDQN class.
    *
    * @param inputDim Number of inputs.
-   * @param h1 Number of neurons in hiddenlayer-1.
-   * @param h2 Number of neurons in hiddenlayer-2.
+   * @param h1 Number of neurons in hidden layer-1.
+   * @param h2 Number of neurons in hidden layer-2.
    * @param outputDim Number of neurons in output layer.
    */
   SimpleDQN(const int inputDim,
