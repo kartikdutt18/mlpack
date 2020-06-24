@@ -211,17 +211,19 @@ using MoreTypes = boost::variant<
         ReinforceNormal<arma::mat, arma::mat>*,
         Reparametrization<arma::mat, arma::mat>*,
         Select<arma::mat, arma::mat>*,
-        Sequential<arma::mat, arma::mat, false>*,
-        Sequential<arma::mat, arma::mat, true>*,
         Subview<arma::mat, arma::mat>*,
         VRClassReward<arma::mat, arma::mat>*,
         VirtualBatchNorm<arma::mat, arma::mat>*,
         RBF<arma::mat, arma::mat, GaussianFunction>*,
-        BaseLayer<GaussianFunction, arma::mat, arma::mat>*
+        BaseLayer<GaussianFunction, arma::mat, arma::mat>*,
+        DropConnect<arma::mat, arma::mat>*,
+        Dropout<arma::mat, arma::mat>*
 >;
 
 template <typename... CustomLayers>
 using LayerTypes = boost::variant<
+    Sequential<arma::mat, arma::mat, false>*,
+    Sequential<arma::mat, arma::mat, true>*,
     AdaptiveMaxPooling<arma::mat, arma::mat>*,
     AdaptiveMeanPooling<arma::mat, arma::mat>*,
     Add<arma::mat, arma::mat>*,
@@ -248,8 +250,6 @@ using LayerTypes = boost::variant<
                 NaiveConvolution<FullConvolution>,
                 NaiveConvolution<ValidConvolution>, arma::mat, arma::mat>*,
     CReLU<arma::mat, arma::mat>*,
-    DropConnect<arma::mat, arma::mat>*,
-    Dropout<arma::mat, arma::mat>*,
     ELU<arma::mat, arma::mat>*,
     FastLSTM<arma::mat, arma::mat>*,
     FlexibleReLU<arma::mat, arma::mat>*,
