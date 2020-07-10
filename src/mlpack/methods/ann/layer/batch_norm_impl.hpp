@@ -194,7 +194,7 @@ void BatchNorm<InputDataType, OutputDataType>::Backward(
   arma::mat normTemp = arma::sum(norm.each_slice() %
       arma::repmat(-stdInv, input.n_rows / size, 1) , 2) /
       input.n_cols;
-  gTemp =  gTemp.each_slice() + normTemp;
+  gTemp.each_slice() += normTemp;
 }
 
 template<typename InputDataType, typename OutputDataType>
