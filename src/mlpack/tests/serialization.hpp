@@ -21,8 +21,9 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <mlpack/core.hpp>
 
-#include "catch.hpp"
-#include "test_catch_tools.hpp"
+#include <boost/test/unit_test.hpp>
+#include "test_tools.hpp"
+
 namespace mlpack {
 
 // Test function for loading and saving Armadillo objects.
@@ -50,7 +51,7 @@ void TestArmadilloSerialization(arma::Cube<CubeType>& x)
     }
   }
 
-  REQUIRE(success ==  true);
+  BOOST_REQUIRE_EQUAL(success, true);
   ofs.close();
 
   // Now load it.
@@ -74,13 +75,13 @@ void TestArmadilloSerialization(arma::Cube<CubeType>& x)
 
   remove(fileName.c_str());
 
-  REQUIRE(success ==  true);
+  BOOST_REQUIRE_EQUAL(success, true);
 
-  REQUIRE(x.n_rows ==  orig.n_rows);
-  REQUIRE(x.n_cols ==  orig.n_cols);
-  REQUIRE(x.n_elem_slice ==  orig.n_elem_slice);
-  REQUIRE(x.n_slices ==  orig.n_slices);
-  REQUIRE(x.n_elem ==  orig.n_elem);
+  BOOST_REQUIRE_EQUAL(x.n_rows, orig.n_rows);
+  BOOST_REQUIRE_EQUAL(x.n_cols, orig.n_cols);
+  BOOST_REQUIRE_EQUAL(x.n_elem_slice, orig.n_elem_slice);
+  BOOST_REQUIRE_EQUAL(x.n_slices, orig.n_slices);
+  BOOST_REQUIRE_EQUAL(x.n_elem, orig.n_elem);
 
   for (size_t slice = 0; slice != x.n_slices; ++slice)
   {
@@ -91,10 +92,10 @@ void TestArmadilloSerialization(arma::Cube<CubeType>& x)
       for (size_t j = 0; j < x.n_rows; ++j)
       {
         if (double(origSlice(j, i)) == 0.0)
-          REQUIRE(abs(double(xSlice(j, i))) <= 1e-8);
+          BOOST_REQUIRE_SMALL(double(xSlice(j, i)), 1e-8);
         else
-          REQUIRE(double(origSlice(j, i)) ==
-              Approx(double(xSlice(j, i))).epsilon(1e-8));
+          BOOST_REQUIRE_CLOSE(double(origSlice(j, i)), double(xSlice(j, i)),
+              1e-8);
       }
     }
   }
@@ -136,7 +137,7 @@ void TestArmadilloSerialization(MatType& x)
     }
   }
 
-  REQUIRE(success ==  true);
+  BOOST_REQUIRE_EQUAL(success, true);
   ofs.close();
 
   // Now load it.
@@ -160,18 +161,18 @@ void TestArmadilloSerialization(MatType& x)
 
   remove(fileName.c_str());
 
-  REQUIRE(success ==  true);
+  BOOST_REQUIRE_EQUAL(success, true);
 
-  REQUIRE(x.n_rows ==  orig.n_rows);
-  REQUIRE(x.n_cols ==  orig.n_cols);
-  REQUIRE(x.n_elem ==  orig.n_elem);
+  BOOST_REQUIRE_EQUAL(x.n_rows, orig.n_rows);
+  BOOST_REQUIRE_EQUAL(x.n_cols, orig.n_cols);
+  BOOST_REQUIRE_EQUAL(x.n_elem, orig.n_elem);
 
   for (size_t i = 0; i < x.n_cols; ++i)
     for (size_t j = 0; j < x.n_rows; ++j)
       if (double(orig(j, i)) == 0.0)
-        REQUIRE(abs(double(x(j, i))) <= 1e-8);
+        BOOST_REQUIRE_SMALL(double(x(j, i)), 1e-8);
       else
-        REQUIRE(double(orig(j, i)) == Approx(double(x(j, i))).epsilon(1e-8));
+        BOOST_REQUIRE_CLOSE(double(orig(j, i)), double(x(j, i)), 1e-8);
 }
 
 // Test all serialization strategies.
@@ -210,7 +211,7 @@ void SerializeObject(T& t, T& newT)
   }
   ofs.close();
 
-  REQUIRE(success ==  true);
+  BOOST_REQUIRE_EQUAL(success, true);
 
   std::ifstream ifs(fileName, std::ios::binary);
 
@@ -231,7 +232,7 @@ void SerializeObject(T& t, T& newT)
 
   remove(fileName.c_str());
 
-  REQUIRE(success ==  true);
+  BOOST_REQUIRE_EQUAL(success, true);
 }
 
 // Test mlpack serialization with all three archive types.
@@ -268,7 +269,7 @@ void SerializePointerObject(T* t, T*& newT)
   }
   ofs.close();
 
-  REQUIRE(success ==  true);
+  BOOST_REQUIRE_EQUAL(success, true);
 
   std::ifstream ifs(fileName, std::ios::binary);
 
@@ -289,7 +290,7 @@ void SerializePointerObject(T* t, T*& newT)
 
   remove(fileName.c_str());
 
-  REQUIRE(success ==  true);
+  BOOST_REQUIRE_EQUAL(success, true);
 }
 
 template<typename T>

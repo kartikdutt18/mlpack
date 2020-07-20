@@ -24,7 +24,7 @@
 #include "catch.hpp"
 #include "test_catch_tools.hpp"
 #include "ann_test_tools.hpp"
-#include "serialization.hpp"
+#include "serialization_catch.hpp"
 
 using namespace mlpack;
 using namespace mlpack::ann;
@@ -117,7 +117,7 @@ TEST_CASE("GradientAddLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -174,7 +174,7 @@ TEST_CASE("JacobianConstantLayerTest", "ANNLayerTest")
     Constant<> module(elements, 1.0);
 
     double error = JacobianTest(module, input);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -255,7 +255,7 @@ TEST_CASE("DropoutProbabilityTest", "ANNLayerTest")
         iterations;
     const double error = fabs(nonzeroCount - expected) / expected;
 
-    BOOST_REQUIRE_LE(error, 0.15);
+    REQUIRE(error <=  0.15);
   }
 }
 
@@ -346,7 +346,7 @@ TEST_CASE("AlphaDropoutProbabilityTest", "ANNLayerTest")
 
     const double error = fabs(nonzeroCount - expected) / expected;
 
-    BOOST_REQUIRE_LE(error, 0.15);
+    REQUIRE(error <=  0.15);
   }
 }
 
@@ -405,7 +405,7 @@ TEST_CASE("JacobianLinearLayerTest", "ANNLayerTest")
     module.Parameters().randu();
 
     double error = JacobianTest(module, input);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -449,7 +449,7 @@ TEST_CASE("GradientLinearLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -482,7 +482,7 @@ TEST_CASE("JacobianNoisyLinearLayerTest", "ANNLayerTest")
   module.Parameters().randu();
 
   double error = JacobianTest(module, input);
-  BOOST_REQUIRE_LE(error, 1e-5);
+  REQUIRE(error <=  1e-5);
 }
 
 /**
@@ -525,7 +525,7 @@ TEST_CASE("GradientNoisyLinearLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -585,7 +585,7 @@ TEST_CASE("JacobianLinearNoBiasLayerTest", "ANNLayerTest")
     module.Parameters().randu();
 
     double error = JacobianTest(module, input);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -629,7 +629,7 @@ TEST_CASE("GradientLinearNoBiasLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -649,7 +649,7 @@ TEST_CASE("JacobianNegativeLogLikelihoodLayerTest", "ANNLayerTest")
     target(0) = math::RandInt(1, inputElements - 1);
 
     double error = JacobianPerformanceTest(module, input, target);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -668,7 +668,7 @@ TEST_CASE("JacobianLeakyReLULayerTest", "ANNLayerTest")
     LeakyReLU<> module;
 
     double error = JacobianTest(module, input);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -687,7 +687,7 @@ TEST_CASE("JacobianFlexibleReLULayerTest", "ANNLayerTest")
     FlexibleReLU<> module;
 
     double error = JacobianTest(module, input);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -733,7 +733,7 @@ TEST_CASE("GradientFlexibleReLULayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -751,7 +751,7 @@ TEST_CASE("JacobianMultiplyConstantLayerTest", "ANNLayerTest")
     MultiplyConstant<> module(3.0);
 
     double error = JacobianTest(module, input);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -770,7 +770,7 @@ TEST_CASE("JacobianHardTanHLayerTest", "ANNLayerTest")
     HardTanH<> module;
 
     double error = JacobianTest(module, input);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -952,7 +952,7 @@ TEST_CASE("GradientLSTMLayerTest", "ANNLayerTest")
     arma::cube input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -1060,7 +1060,7 @@ TEST_CASE("GradientFastLSTMLayerTest", "ANNLayerTest")
   // The threshold should be << 0.1 but since the Fast LSTM layer uses an
   // approximation of the sigmoid function the estimated gradient is not
   // correct.
-  BOOST_REQUIRE_LE(CheckGradient(function), 0.2);
+  REQUIRE(CheckGradient(function) <=  0.2);
 }
 
 /**
@@ -1327,7 +1327,7 @@ TEST_CASE("GradientGRULayerTest", "ANNLayerTest")
     arma::cube input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -1569,7 +1569,7 @@ TEST_CASE("GradientConcatLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -1640,7 +1640,7 @@ TEST_CASE("GradientConcatenateLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -1783,7 +1783,7 @@ TEST_CASE("GradientSoftmaxTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /*
@@ -2065,7 +2065,7 @@ TEST_CASE("GradientVirtualBatchNormTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -2125,7 +2125,7 @@ TEST_CASE("MiniBatchDiscriminationTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -2423,7 +2423,7 @@ TEST_CASE("GradientAtrousConvolutionLayerTest", "ANNLayerTest")
 
   // TODO: this tolerance seems far higher than necessary.  The implementation
   // should be checked.
-  BOOST_REQUIRE_LE(CheckGradient(function), 0.2);
+  REQUIRE(CheckGradient(function) <=  0.2);
 }
 
 /**
@@ -2606,7 +2606,7 @@ TEST_CASE("GradientLayerNormTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -2821,7 +2821,7 @@ TEST_CASE("SimpleReparametrizationLayerTest", "ANNLayerTest")
   input = join_cols(arma::ones<arma::mat>(5, 1) * -15,
       arma::zeros<arma::mat>(5, 1));
   module.Forward(input, output);
-  BOOST_REQUIRE_LE(arma::accu(output), 1e-5);
+  REQUIRE(arma::accu(output) <=  1e-5);
 
   // Test the Backward function.
   arma::mat gy = arma::zeros<arma::mat>(5, 1);
@@ -2882,7 +2882,7 @@ TEST_CASE("JacobianReparametrizationLayerTest", "ANNLayerTest")
     Reparametrization<> module(inputElementsHalf, false, false);
 
     double error = JacobianTest(module, input);
-    BOOST_REQUIRE_LE(error, 1e-5);
+    REQUIRE(error <=  1e-5);
   }
 }
 
@@ -2927,7 +2927,7 @@ TEST_CASE("GradientReparametrizationLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -2972,7 +2972,7 @@ TEST_CASE("GradientReparametrizationLayerBetaTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -3135,7 +3135,7 @@ TEST_CASE("GradientHighwayLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -3186,7 +3186,7 @@ TEST_CASE("GradientSequentialLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**
@@ -3233,7 +3233,7 @@ TEST_CASE("GradientWeightNormLayerTest", "ANNLayerTest")
     arma::mat input, target;
   } function;
 
-  BOOST_REQUIRE_LE(CheckGradient(function), 1e-4);
+  REQUIRE(CheckGradient(function) <=  1e-4);
 }
 
 /**

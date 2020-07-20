@@ -4,7 +4,6 @@ add_executable(mlpack_test
   adaboost_test.cpp
   akfn_test.cpp
   aknn_test.cpp
-  ann_layer_test.cpp
   ann_regularizer_test.cpp
   ann_test_tools.hpp
   ann_visitor_test.cpp
@@ -169,6 +168,7 @@ add_executable(mlpack_test
 
 add_executable(mlpack_catch_test
   ann_dist_test.cpp
+  ann_layer_test.cpp
   main.cpp
   serialization_catch.cpp
   serialization_catch.hpp
