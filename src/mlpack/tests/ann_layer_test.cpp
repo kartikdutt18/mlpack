@@ -4186,3 +4186,26 @@ TEST_CASE("BatchNormDeterministicTest", "[ANNLayerTest]")
   // The model should switch to training mode for predicting.
   REQUIRE(boost::get<BatchNorm<>*>(module.Model()[0])->Deterministic() == 0);
 }
+
+TEST_CASE("LinearLayerTest", "[ANNLayerTest]")
+{
+  Linear<> layer(8, 4);
+  layer.Reset();
+  layer.Parameters().zeros();
+  layer.Parameters().submat(arma::span(0, 8 * 4 - 1), arma::span()).fill(3.0);
+
+  arma::mat input(8, 3), output;
+  input << 1 << 446 << 42 << arma::endr
+      << 2 << 16 << 63 << arma::endr
+      << 3 << 13 << 63 << arma::endr
+      << 4 << 21 << 21 << arma::endr
+      << 1 << 13 << 11 << arma::endr
+      << 32 << 45 << 42 << arma::endr
+      << 22 << 16 << 63 << arma::endr
+      << 32 << 13 << 42 << arma::endr;
+
+  layer.Forward(input, output);
+  REQUIRE(arma::accu(input) == 12324);
+  REQUIRE(output.n_cols == 3);
+  REQUIRE(output.n_rows == 4);
+}
