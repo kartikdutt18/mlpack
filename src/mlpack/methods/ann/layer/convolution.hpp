@@ -111,6 +111,18 @@ class Convolution
               const size_t inputHeight = 0,
               const std::string& paddingType = "None");
 
+  //! Copy Constructor for Convolution layer.
+  Convolution(const Convolution& layer);
+
+  //! Move Constructor for Convolution layer.
+  Convolution(Convolution&&);
+
+  //! Copy assignment operator.
+  Convolution& operator=(const Convolution& layer);
+
+  //! Move assignment operator.
+  Convolution& operator=(Convolution&&);
+
   /*
    * Set the weight and bias term.
    */
